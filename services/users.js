@@ -30,10 +30,7 @@ UserService.update = (id, birthname, username, email, firebase_uid, profile_img,
         email = $[email],
         firebase_uid = $[firebase_uid],
         profile_img = $[profile_img],
-        birthday = $[birthday],
-        joining_reason = $[joining_reason],
-        followers_number = $[followers_number],
-        followings_number = $[followings_number]
+        birthday = $[birthday]
     WHERE
         id=$[id]
     `;
