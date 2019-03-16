@@ -21,5 +21,25 @@ UserService.read = (id) => {
     return db.one(sql, {id})
 }
 
+UserService.update = (id, birthname, username, email, firebase_uid, profile_img, birthday, joining_reason, followers_number, followings_number) => {
+    const sql = `
+    UPDATE users
+    SET
+        birthname = $[birthname],
+        username = $[username],
+        email = $[email],
+        firebase_uid = $[firebase_uid],
+        profile_img = $[profile_img],
+        birthday = $[birthday],
+        joining_reason = $[joining_reason],
+        followers_number = $[followers_number],
+        followings_number = $[followings_number]
+    WHERE
+        id=$[id]
+    `;
+
+    return db.none(sql, {id, birthname, username, email, firebase_uid, profile_img, birthday, joining_reason, followers_number, followings_number});
+}
+
 
 module.exports = UserService;
