@@ -6,7 +6,7 @@ UserService.create = (birthname, username, email, firebase_uid, profile_img, bir
     INSERT INTO users (birthname, username, email, firebase_uid, profile_img, birthday, joining_reason, followers_number, followings_number) VALUES
     ($[birthname], $[username], $[email], $[firebase_uid], $[profile_img], $[birthday], $[joining_reason], $[followers_number], $[followings_number]);`;
 
-    return db.one(sql, {birthname, username, email, firebase_uid, profile_img, birthday, joining_reason, followers_number, followings_number});
+    return db.one(sql, { birthname, username, email, firebase_uid, profile_img, birthday, joining_reason, followers_number, followings_number });
 }
 
 UserService.read = (id) => {
@@ -18,7 +18,7 @@ UserService.read = (id) => {
         users.id = $[id]
     `;
 
-    return db.one(sql, {id})
+    return db.one(sql, { id })
 }
 
 UserService.update = (id, birthname, username, email, firebase_uid, profile_img, birthday, joining_reason, followers_number, followings_number) => {
@@ -37,7 +37,7 @@ UserService.update = (id, birthname, username, email, firebase_uid, profile_img,
         id=$[id]
     `;
 
-    return db.none(sql, {id, updated_at, birthname, username, email, firebase_uid, profile_img, birthday, joining_reason, followers_number, followings_number});
+    return db.none(sql, { id, updated_at, birthname, username, email, firebase_uid, profile_img, birthday, joining_reason, followers_number, followings_number });
 }
 
 UserService.delete = (id) => {
@@ -45,7 +45,7 @@ UserService.delete = (id) => {
     DELETE FROM users WHERE id=$[id]
     `;
 
-    return db.none(sql, {id});
+    return db.none(sql, { id });
 }
 
 
