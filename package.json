@@ -1,0 +1,25 @@
+{
+  "name": "butter_backend",
+  "version": "1.0.0",
+  "description": "Butter's backend magic",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pamelaabreu/butter_backend.git"
+  },
+  "keywords": [
+    "butter"
+  ],
+  "author": "Pamela Abreu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pamelaabreu/butter/issues"
+  },
+  "homepage": "https://github.com/pamelaabreu/butter#readme",
+  "dependencies": {
+    "pg-promise": "^8.6.4"
+  }
+}
