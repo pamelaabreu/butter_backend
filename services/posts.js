@@ -38,5 +38,12 @@ PostService.update = (id, tag_id, content_url, title, summary, caption) => {
     return db.none(sql, { id, updated_at, tag_id, content_url, title, summary, caption });
 };
 
+PostService.delete = (id) => {
+    const sql = `
+    DELETE FROM posts WHERE id=$[id]
+    `;
+
+    return db.none(sql, { id });
+};
 
 module.exports = PostService;
