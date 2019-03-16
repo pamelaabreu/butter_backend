@@ -7,7 +7,7 @@ PostService.create = (user_posted_id, tag_id, content_url, title, summary, capti
     ($[user_posted_id], $[tag_id], $[content_url], $[title], $[summary], $[caption], $[likes]);`;
 
     return db.one(sql, { user_posted_id, tag_id, content_url, title, summary, caption, likes })
-}
+};
 
 PostService.read = (id) => {
     const sql = `
@@ -18,9 +18,25 @@ PostService.read = (id) => {
     `;
 
     return db.one(sql, { id });
-}
+};
 
+PostService.update = (id, tag_id, content_url, title, summary, caption) => {
+    const updated_at = Date.now();
+    const sql = `
+    UPDATE posts
+    SET
+        updated_at = $[updated_at],
+        tag_id = $[tag_id],
+        content_url = $[content_url],
+        title = $[title],
+        summary = $[summary],
+        caption = $[caption]
+    WHERE
+        id = $[id]
+    `;
 
+    return db.none(sql, { id, updated_at, tag_id, content_url, title, summary, caption });
+};
 
 
 module.exports = PostService;
