@@ -21,4 +21,19 @@ LikeService.read = (id) => {
     return db.one(sql, { id });
 };
 
+FollowService.update = (id, user_like_id, post_like_id) => {
+    const updated_at = Date.now();
+    const sql = `
+    UPDATE likes
+    SET
+        updated_at = $[updated_at],
+        user_like_id = $[user_like_id],
+        post_like_id = $[post_like_id]
+    WHERE
+        id=$[id]
+    `;
+
+    return db.none(sql, { id, updated_at, user_like_id, post_like_id });
+};
+
 module.exports = LikeService;
