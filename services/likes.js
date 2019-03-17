@@ -21,7 +21,7 @@ LikeService.read = (id) => {
     return db.one(sql, { id });
 };
 
-FollowService.update = (id, user_like_id, post_like_id) => {
+LikeService.update = (id, user_like_id, post_like_id) => {
     const updated_at = Date.now();
     const sql = `
     UPDATE likes
@@ -34,6 +34,14 @@ FollowService.update = (id, user_like_id, post_like_id) => {
     `;
 
     return db.none(sql, { id, updated_at, user_like_id, post_like_id });
+};
+
+LikeService.delete = (id) => {
+    const sql = `
+    DELETE FROM likes WHERE id=$[id]
+    `;
+
+    return db.none(sql, { id });
 };
 
 module.exports = LikeService;
