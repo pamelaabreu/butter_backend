@@ -4,10 +4,10 @@ const CommentsService = {};
 CommentsService.create = (user_commented_id, post_commented_id, comment) => {
     const sql = `
     INSERT INTO comments (user_commented_id, post_commented_id, comment) VALUES
-    ($[user_commented_id], $[post_commented_id],$[comment]);`;
+    ($[user_commented_id], $[post_commented_id], $[comment]);`;
 
     return db.one(sql, { user_commented_id, post_commented_id, comment });
-}
+};
 
 CommentsService.read = (id) => {
     const sql = `
@@ -45,7 +45,5 @@ CommentsService.delete = (id) => {
 
     return db.none(sql, { id });
 };
-
-
 
 module.exports = CommentsService;
