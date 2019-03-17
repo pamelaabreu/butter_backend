@@ -34,7 +34,8 @@ CREATE TABLE posts (
   title VARCHAR NULL,
   summary VARCHAR NULL,
   caption VARCHAR NULL,
-  likes INT NULL
+  likes INT NULL,
+  comments INT NULL
 );
 
 CREATE TABLE comments (
@@ -115,10 +116,10 @@ INSERT INTO users (birthname, username, email, profile_img, birthday, joining_re
 ('Rupa', 'rupa1216', 'rupa@rupa.com', 'https://williamsburgvets.com/wp-content/uploads/2018/03/bulldog-puppy-pic.jpg', '12161988', 'Why didnt this exist before?', 1, 1, 'somethingToken'),
 ('Thinx', 'thinx', 'thinx@thinx.com', 'https://mindbodygreen-res.cloudinary.com/images/w_767,q_auto:eco,f_auto,fl_lossy/ptr/QpbufLD/thinx.png', '12161988', 'A company like ours want to be a part of this conversation', 0, 0, 'somethingToken');
 
-INSERT INTO posts (user_posted_id, tag_id, content_url, title, summary, caption, likes) VALUES
-(4, 20, 'https://www.welltodoglobal.com/wp-content/uploads/2018/08/thinx_2-web.jpg', 'Thinx', 'Innovative period-proof underwear brand THINX has launched into the UK, continuing its mission to break taboos surrounding women’s intimate wellness.', 'Break women’s intimate taboos', 0),
-(1, 3, 'http://b.parsons.edu/~abrep743/parsons/images/pam_d.jpg', 'Afraid', 'As much as Im smiling here, Im really anxious about never being perfect or good or accpeted.', 'Never being perfect enough',0),
-(2, 7, 'https://static.wixstatic.com/media/335c4d_7636a4c8d6a0452fb6f96cb30de0a066~mv2_d_3724_5586_s_4_2.jpg/v1/fill/w_498,h_748,al_c,q_85,usm_0.66_1.00_0.01/335c4d_7636a4c8d6a0452fb6f96cb30de0a066~mv2_d_3724_5586_s_4_2.webp', 'DAM', 'Unlike any other dental dams on the market, our dams are wearable, silicone, ergonomic and tongue textured.', 'Ever used a DAM?',3);
+INSERT INTO posts (user_posted_id, tag_id, content_url, title, summary, caption, likes, comments) VALUES
+(4, 20, 'https://www.welltodoglobal.com/wp-content/uploads/2018/08/thinx_2-web.jpg', 'Thinx', 'Innovative period-proof underwear brand THINX has launched into the UK, continuing its mission to break taboos surrounding women’s intimate wellness.', 'Break women’s intimate taboos', 0, 0),
+(1, 3, 'http://b.parsons.edu/~abrep743/parsons/images/pam_d.jpg', 'Afraid', 'As much as Im smiling here, Im really anxious about never being perfect or good or accpeted.', 'Never being perfect enough',0, 2),
+(2, 7, 'https://static.wixstatic.com/media/335c4d_7636a4c8d6a0452fb6f96cb30de0a066~mv2_d_3724_5586_s_4_2.jpg/v1/fill/w_498,h_748,al_c,q_85,usm_0.66_1.00_0.01/335c4d_7636a4c8d6a0452fb6f96cb30de0a066~mv2_d_3724_5586_s_4_2.webp', 'DAM', 'Unlike any other dental dams on the market, our dams are wearable, silicone, ergonomic and tongue textured.', 'Ever used a DAM?',3, 2);
 
 INSERT INTO comments (user_commented_id, post_commented_id, comment) VALUES
 (1, 3, 'I WANT ONE! ✋'),
