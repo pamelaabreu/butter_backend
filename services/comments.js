@@ -38,5 +38,14 @@ CommentsService.update = (id, user_commented_id, post_commented_id, comment) => 
     return db.none(sql, { id, updated_at, user_commented_id, post_commented_id, comment });
 };
 
+CommentsService.delete = (id) => {
+    const sql = `
+    DELETE FROM comments WHERE id=$[id]
+    `;
+
+    return db.none(sql, { id });
+};
+
+
 
 module.exports = CommentsService;
