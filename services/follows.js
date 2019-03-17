@@ -21,4 +21,19 @@ FollowService.read = (id) => {
     return db.one(sql, { id });
 };
 
+FollowService.update = (id, user_follower_id, user_following_id) => {
+    const updated_at = Date.now();
+    const sql = `
+    UPDATE comments
+    SET
+        updated_at = $[updated_at],
+        user_follower_id = $[user_follower_id],
+        user_following_id = $[user_following_id]
+    WHERE
+        id=$[id]
+    `;
+
+    return db.none(sql, { id, updated_at, user_follower_id, user_following_id });
+};
+
 module.exports = FollowService;
