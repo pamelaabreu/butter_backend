@@ -44,5 +44,26 @@ SavedPostService.delete = (id) => {
     return db.none(sql, { id });
 };
 
+SavedPostService.readAllSavedPosts = (id) => {
+    const sql = `
+    SELECT
+        saved_posts.user_saved_id,
+        saved_posts.post_saved_id,
+        posts.id AS posts_id,
+        posts.tag_id,
+        posts.content_url,
+        posts.title,
+        posts.summary,
+        posts.caption,
+        posts.likes,
+        posts.comments
+    FROM saved_posts
+    JOIN posts
+        ON saved_posts.post_saved_id = posts.id
+    WHERE
+        saved_posts.user_saved_id = $[id]
+    `;
+    return db.any(sql, {id});
+}
 
 module.exports = SavedPostService;
