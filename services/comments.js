@@ -46,4 +46,34 @@ CommentsService.delete = (id) => {
     return db.none(sql, { id });
 };
 
+CommentsService.readAllComments = (id) => {
+    const sql = `
+    SELECT 
+        comments.*
+    FROM comments
+    WHERE
+        comments.post_commented_id = $[id]
+    `;
+    return db.any(sql, {id});
+}
+
+CommentsService.updatePostsComments = (id) => {
+    const updated_at = Date.now();
+    const sql = `
+    UPDATE posts
+    SET
+        updated_at = $[updated_at],
+        comments = $[comments]
+    WHERE
+        id = $[id]
+    `;
+
+    return CommentsService.readAllComments(id)
+    .then(data => {
+        const comments = data.length;
+        return db.none(sql, { id, updated_at, comments });
+    })
+    .catch(err => console.log(err))
+};
+
 module.exports = CommentsService;
