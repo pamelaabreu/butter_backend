@@ -66,4 +66,42 @@ FollowService.readAllFollowings = (id) => {
     return db.any(sql, {id});
 }
 
+FollowService.updateUsersFollowers = (id) => {
+    const updated_at = Date.now();
+    const sql = `
+    UPDATE users
+    SET
+        updated_at = $[updated_at],
+        followers_number = $[followers_number]
+    WHERE
+        id = $[id]
+    `;
+
+    return FollowService.readAllFollowers(id)
+    .then(data => {
+        const followers_number = data.length;
+        return db.none(sql, { id, updated_at, followers_number });
+    })
+    .catch(err => console.log(err))
+};
+
+FollowService.updateUsersFollowings = (id) => {
+    const updated_at = Date.now();
+    const sql = `
+    UPDATE users
+    SET
+        updated_at = $[updated_at],
+        followings_number = $[followings_number]
+    WHERE
+        id = $[id]
+    `;
+
+    return FollowService.readAllFollowings(id)
+    .then(data => {
+        const followings_number = data.length;
+        return db.none(sql, { id, updated_at, followings_number });
+    })
+    .catch(err => console.log(err))
+};
+
 module.exports = FollowService;
