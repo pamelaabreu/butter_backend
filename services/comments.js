@@ -21,4 +21,22 @@ CommentsService.read = (id) => {
     return db.one(sql, { id });
 };
 
+
+CommentsService.update = (id, user_commented_id, post_commented_id, comment) => {
+    const updated_at = Date.now();
+    const sql = `
+    UPDATE comments
+    SET
+        updated_at = $[updated_at],
+        user_commented_id = $[user_commented_id],
+        post_commented_id = $[post_commented_id],
+        comment = $[comment]
+    WHERE
+        id=$[id]
+    `;
+
+    return db.none(sql, { id, updated_at, user_commented_id, post_commented_id, comment });
+};
+
+
 module.exports = CommentsService;
