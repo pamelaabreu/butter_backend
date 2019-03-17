@@ -44,4 +44,34 @@ LikeService.delete = (id) => {
     return db.none(sql, { id });
 };
 
+LikeService.readAllLikes = (id) => {
+    const sql = `
+    SELECT 
+        likes.*
+    FROM likes
+    WHERE
+        likes.post_like_id = $[id]
+    `;
+    return db.any(sql, {id});
+};
+
+LikeService.updateLikes = (id) => {
+    const updated_at = Date.now();
+    const sql = `
+    UPDATE posts
+    SET
+        updated_at = $[updated_at],
+        likes = $[likes_number]
+    WHERE
+        id = $[id]
+    `;
+
+    return LikeService.readAllLikes(id)
+    .then(data => {
+        const likes_number = data.length;
+        return db.none(sql, { id, updated_at, likes_number });
+    })
+    .catch(err => console.log(err))
+};
+
 module.exports = LikeService;
