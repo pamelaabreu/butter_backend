@@ -36,5 +36,13 @@ SavedPostService.update = (id, user_saved_id, post_saved_id) => {
     return db.none(sql, { id, updated_at, user_saved_id, post_saved_id });
 };
 
+SavedPostService.delete = (id) => {
+    const sql = `
+    DELETE FROM saved_posts WHERE id=$[id]
+    `;
+
+    return db.none(sql, { id });
+};
+
 
 module.exports = SavedPostService;
