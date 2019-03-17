@@ -44,4 +44,26 @@ FollowService.delete = (id) => {
     return db.none(sql, { id });
 };
 
+FollowService.readAllFollowers = (id) => {
+    const sql = `
+    SELECT 
+        follows.user_follower_id
+    FROM follows
+    WHERE
+        follows.user_following_id = $[id]
+    `;
+    return db.any(sql, {id});
+}
+
+FollowService.readAllFollowings = (id) => {
+    const sql = `
+    SELECT 
+        follows.user_following_id
+    FROM follows
+    WHERE
+        follows.user_follower_id = $[id]
+    `;
+    return db.any(sql, {id});
+}
+
 module.exports = FollowService;
