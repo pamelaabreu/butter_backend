@@ -74,4 +74,14 @@ LikeService.updateLikes = (id) => {
     .catch(err => console.log(err))
 };
 
+LikeService.countLikes = (id) => {
+    const sql = `
+    SELECT COUNT (post_like_id)
+    FROM posts
+    WHERE post_like_id = $[id];
+    `;
+
+    db.any(sql, { id })
+};
+
 module.exports = LikeService;

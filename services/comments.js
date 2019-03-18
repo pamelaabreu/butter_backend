@@ -1,7 +1,7 @@
 const {db} = require('./dbConnect');
-const CommentsService = {};
+const CommentService = {};
 
-CommentsService.create = (user_commented_id, post_commented_id, comment) => {
+CommentService.create = (user_commented_id, post_commented_id, comment) => {
     const sql = `
     INSERT INTO comments (user_commented_id, post_commented_id, comment) VALUES
     ($[user_commented_id], $[post_commented_id], $[comment]);`;
@@ -9,7 +9,7 @@ CommentsService.create = (user_commented_id, post_commented_id, comment) => {
     return db.one(sql, { user_commented_id, post_commented_id, comment });
 };
 
-CommentsService.read = (id) => {
+CommentService.read = (id) => {
     const sql = `
     SELECT
         comments.*
@@ -22,7 +22,7 @@ CommentsService.read = (id) => {
 };
 
 
-CommentsService.update = (id, user_commented_id, post_commented_id, comment) => {
+CommentService.update = (id, user_commented_id, post_commented_id, comment) => {
     const updated_at = Date.now();
     const sql = `
     UPDATE comments
@@ -38,7 +38,7 @@ CommentsService.update = (id, user_commented_id, post_commented_id, comment) => 
     return db.none(sql, { id, updated_at, user_commented_id, post_commented_id, comment });
 };
 
-CommentsService.delete = (id) => {
+CommentService.delete = (id) => {
     const sql = `
     DELETE FROM comments WHERE id=$[id]
     `;
@@ -46,7 +46,7 @@ CommentsService.delete = (id) => {
     return db.none(sql, { id });
 };
 
-CommentsService.readAllComments = (id) => {
+CommentService.readAllComments = (id) => {
     const sql = `
     SELECT 
         comments.*
@@ -57,7 +57,7 @@ CommentsService.readAllComments = (id) => {
     return db.any(sql, {id});
 }
 
-CommentsService.updatePostsComments = (id) => {
+CommentService.updatePostsComments = (id) => {
     const updated_at = Date.now();
     const sql = `
     UPDATE posts
@@ -68,7 +68,7 @@ CommentsService.updatePostsComments = (id) => {
         id = $[id]
     `;
 
-    return CommentsService.readAllComments(id)
+    return CommentService.readAllComments(id)
     .then(data => {
         const comments = data.length;
         return db.none(sql, { id, updated_at, comments });
@@ -76,4 +76,15 @@ CommentsService.updatePostsComments = (id) => {
     .catch(err => console.log(err))
 };
 
-module.exports = CommentsService;
+CommentService.countComments = (id) => {
+    const sql = `
+    SELECT COUNT (post_commented_id)
+    FROM comments
+    WHERE post_commented_id = $[id];
+    `;
+
+    db.any(sql, { id })
+};
+
+
+module.exports = CommentService;

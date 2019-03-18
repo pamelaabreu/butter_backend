@@ -12,8 +12,12 @@ PostService.create = (user_posted_id, tag_id, content_url, title, summary, capti
 PostService.read = (id) => {
     const sql = `
         SELECT
-            posts.*
+            posts.*,
+            tags.topic_name,
+            tags.image_url AS tag_image
         FROM posts
+        INNER JOIN tags
+        ON posts.tag_id = tags.id
         WHERE posts.id = $[id]
     `;
 
@@ -45,5 +49,21 @@ PostService.delete = (id) => {
 
     return db.none(sql, { id });
 };
+
+PostService.readAllPosts = (id) => {
+    const sql = `
+    SELECT 
+        posts.*,
+        tags.topic_name,
+        tags.image_url AS tag_image
+    FROM posts
+    INNER JOIN tags
+    ON posts.tag_id = tags.id
+    WHERE
+        posts.user_posted_id = $[id]
+    `;
+
+    return db.any(sql, { id });
+}
 
 module.exports = PostService;
