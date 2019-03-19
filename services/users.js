@@ -48,5 +48,16 @@ UserService.delete = (id) => {
     return db.none(sql, { id });
 };
 
+UserService.readAllUsers = (username) => {
+    const sql = `
+    SELECT 
+        users.*
+    FROM users
+    WHERE
+        users.username = $[username]
+    `;
+    return db.any(sql, { username });
+};
+
 
 module.exports = UserService;
