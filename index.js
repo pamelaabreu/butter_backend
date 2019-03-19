@@ -4,6 +4,7 @@ const app = express();
 const port = 3000;
 
 const postRouter = require('./routes/posts');
+const userRouter = require('./routes/users');
 
 // MIDDLEWARE NEEDED
 // parse application/x-www-form-urlencoded
@@ -13,7 +14,7 @@ app.use(bodyParser.json())
 
 // ROUTES
 app.use('/post', postRouter);
-
+app.use('/user', userRouter);
 
 app.use((err, req, res, next) => {
     res.status(400).json({error: err.toString()});

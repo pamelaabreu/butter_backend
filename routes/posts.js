@@ -17,7 +17,7 @@ postRouter.post('/', (req, res, next) => {
 
 // GET - READ 
 postRouter.get('/:id/', (req, res, next) => {
-    const {id} = req.params;
+    const { id } = req.params;
   
     PostService.read(id)
       .then(data => {
@@ -31,7 +31,7 @@ postRouter.get('/:id/', (req, res, next) => {
 // PUT - UPDATE
 postRouter.put('/:id', (req, res, next) => {
     const { tag_id, content_url, title, summary, caption } = req.body;
-    const {id} = req.params;
+    const { id } = req.params;
   
     PostService.update(id, tag_id, content_url, title, summary, caption)
       .then(data => {
@@ -44,7 +44,7 @@ postRouter.put('/:id', (req, res, next) => {
 
 // DELETE - DELETE
 postRouter.delete('/:id', (req, res, next) => {
-    const {id} = req.params;
+    const { id } = req.params;
   
     PostService.delete(id)
       .then(data => {
@@ -57,7 +57,7 @@ postRouter.delete('/:id', (req, res, next) => {
 
 // GET - READ ALL POSTS 
 postRouter.get('/:id/all', (req, res, next) => {
-    const {id} = req.params;
+    const { id } = req.params;
   
     PostService.readAllPosts(id)
       .then(data => {

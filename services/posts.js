@@ -6,7 +6,7 @@ PostService.create = (user_posted_id, tag_id, content_url, title, summary, capti
     INSERT INTO posts (user_posted_id, tag_id, content_url, title, summary, caption) VALUES
     ($[user_posted_id], $[tag_id], $[content_url], $[title], $[summary], $[caption]);`;
 
-    return db.none(sql, { user_posted_id, tag_id, content_url, title, summary, caption})
+    return db.none(sql, { user_posted_id, tag_id, content_url, title, summary, caption })
 };
 
 PostService.read = (id) => {
