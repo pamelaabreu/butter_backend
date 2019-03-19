@@ -22,18 +22,16 @@ SavedPostService.read = (id) => {
 };
 
 SavedPostService.update = (id, user_saved_id, post_saved_id) => {
-    const updated_at = Date.now();
     const sql = `
     UPDATE saved_posts
     SET
-        updated_at = $[updated_at],
         user_saved_id = $[user_saved_id],
         post_saved_id = $[post_saved_id]
     WHERE
         id=$[id]
     `;
 
-    return db.none(sql, { id, updated_at, user_saved_id, post_saved_id });
+    return db.none(sql, { id, user_saved_id, post_saved_id });
 };
 
 SavedPostService.delete = (id) => {

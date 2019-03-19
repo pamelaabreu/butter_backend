@@ -22,11 +22,9 @@ UserService.read = (id) => {
 };
 
 UserService.update = (id, birthname, username, email, firebase_uid, profile_img, birthday) => {
-    const updated_at = Date.now();
     const sql = `
     UPDATE users
     SET
-        updated_at = $[updated_at],
         birthname = $[birthname],
         username = $[username],
         email = $[email],
@@ -37,7 +35,7 @@ UserService.update = (id, birthname, username, email, firebase_uid, profile_img,
         id=$[id]
     `;
 
-    return db.none(sql, { id, updated_at, birthname, username, email, firebase_uid, profile_img, birthday });
+    return db.none(sql, { id, birthname, username, email, firebase_uid, profile_img, birthday });
 };
 
 UserService.delete = (id) => {
@@ -48,15 +46,13 @@ UserService.delete = (id) => {
     return db.none(sql, { id });
 };
 
-UserService.readAllUsers = (username) => {
+UserService.readAllUsers = () => {
     const sql = `
     SELECT 
         users.*
     FROM users
-    WHERE
-        users.username = $[username]
     `;
-    return db.any(sql, { username });
+    return db.any(sql);
 };
 
 

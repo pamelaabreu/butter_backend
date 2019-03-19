@@ -23,11 +23,9 @@ CommentService.read = (id) => {
 
 
 CommentService.update = (id, user_commented_id, post_commented_id, comment) => {
-    const updated_at = Date.now();
     const sql = `
     UPDATE comments
     SET
-        updated_at = $[updated_at],
         user_commented_id = $[user_commented_id],
         post_commented_id = $[post_commented_id],
         comment = $[comment]
@@ -35,7 +33,7 @@ CommentService.update = (id, user_commented_id, post_commented_id, comment) => {
         id=$[id]
     `;
 
-    return db.none(sql, { id, updated_at, user_commented_id, post_commented_id, comment });
+    return db.none(sql, { id, user_commented_id, post_commented_id, comment });
 };
 
 CommentService.delete = (id) => {
@@ -58,11 +56,9 @@ CommentService.readAllComments = (id) => {
 }
 
 CommentService.updatePostsComments = (id) => {
-    const updated_at = Date.now();
     const sql = `
     UPDATE posts
     SET
-        updated_at = $[updated_at],
         comments = $[comments]
     WHERE
         id = $[id]
@@ -71,7 +67,7 @@ CommentService.updatePostsComments = (id) => {
     return CommentService.readAllComments(id)
     .then(data => {
         const comments = data.length;
-        return db.none(sql, { id, updated_at, comments });
+        return db.none(sql, { id, comments });
     })
     .catch(err => console.log(err))
 };

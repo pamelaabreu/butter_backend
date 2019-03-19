@@ -22,18 +22,16 @@ LikeService.read = (id) => {
 };
 
 LikeService.update = (id, user_like_id, post_like_id) => {
-    const updated_at = Date.now();
     const sql = `
     UPDATE likes
     SET
-        updated_at = $[updated_at],
         user_like_id = $[user_like_id],
         post_like_id = $[post_like_id]
     WHERE
         id=$[id]
     `;
 
-    return db.none(sql, { id, updated_at, user_like_id, post_like_id });
+    return db.none(sql, { id, user_like_id, post_like_id });
 };
 
 LikeService.delete = (id) => {
@@ -56,11 +54,9 @@ LikeService.readAllLikes = (id) => {
 };
 
 LikeService.updateLikes = (id) => {
-    const updated_at = Date.now();
     const sql = `
     UPDATE posts
     SET
-        updated_at = $[updated_at],
         likes = $[likes_number]
     WHERE
         id = $[id]
@@ -69,7 +65,7 @@ LikeService.updateLikes = (id) => {
     return LikeService.readAllLikes(id)
     .then(data => {
         const likes_number = data.length;
-        return db.none(sql, { id, updated_at, likes_number });
+        return db.none(sql, { id, likes_number });
     })
     .catch(err => console.log(err))
 };

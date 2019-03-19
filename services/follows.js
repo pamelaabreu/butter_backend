@@ -22,18 +22,16 @@ FollowService.read = (id) => {
 };
 
 FollowService.update = (id, user_follower_id, user_following_id) => {
-    const updated_at = Date.now();
     const sql = `
     UPDATE follows
     SET
-        updated_at = $[updated_at],
         user_follower_id = $[user_follower_id],
         user_following_id = $[user_following_id]
     WHERE
         id=$[id]
     `;
 
-    return db.none(sql, { id, updated_at, user_follower_id, user_following_id });
+    return db.none(sql, { id, user_follower_id, user_following_id });
 };
 
 FollowService.delete = (id) => {
@@ -91,11 +89,9 @@ FollowService.readAllFollowings = (id) => {
 };
 
 FollowService.updateUsersFollowers = (id) => {
-    const updated_at = Date.now();
     const sql = `
     UPDATE users
     SET
-        updated_at = $[updated_at],
         followers_number = $[followers_number]
     WHERE
         id = $[id]
@@ -104,17 +100,15 @@ FollowService.updateUsersFollowers = (id) => {
     return FollowService.readAllFollowers(id)
     .then(data => {
         const followers_number = data.length;
-        return db.none(sql, { id, updated_at, followers_number });
+        return db.none(sql, { id, followers_number });
     })
     .catch(err => console.log(err))
 };
 
 FollowService.updateUsersFollowings = (id) => {
-    const updated_at = Date.now();
     const sql = `
     UPDATE users
     SET
-        updated_at = $[updated_at],
         followings_number = $[followings_number]
     WHERE
         id = $[id]
@@ -123,7 +117,7 @@ FollowService.updateUsersFollowings = (id) => {
     return FollowService.readAllFollowings(id)
     .then(data => {
         const followings_number = data.length;
-        return db.none(sql, { id, updated_at, followings_number });
+        return db.none(sql, { id, followings_number });
     })
     .catch(err => console.log(err))
 };
