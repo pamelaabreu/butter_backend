@@ -1,12 +1,12 @@
 const {db} = require('./dbConnect');
 const PostService = {};
 
-PostService.create = (user_posted_id, tag_id, content_url, title, summary, caption, likes, comments) => {
+PostService.create = (user_posted_id, tag_id, content_url, title, summary, caption) => {
     const sql = `
-    INSERT INTO posts (user_posted_id, tag_id, content_url, title, summary, caption, likes, comments) VALUES
-    ($[user_posted_id], $[tag_id], $[content_url], $[title], $[summary], $[caption], $[likes], $[comments]);`;
+    INSERT INTO posts (user_posted_id, tag_id, content_url, title, summary, caption) VALUES
+    ($[user_posted_id], $[tag_id], $[content_url], $[title], $[summary], $[caption]);`;
 
-    return db.one(sql, { user_posted_id, tag_id, content_url, title, summary, caption, likes, comments })
+    return db.none(sql, { user_posted_id, tag_id, content_url, title, summary, caption})
 };
 
 PostService.read = (id) => {
@@ -25,11 +25,9 @@ PostService.read = (id) => {
 };
 
 PostService.update = (id, tag_id, content_url, title, summary, caption) => {
-    const updated_at = Date.now();
     const sql = `
     UPDATE posts
     SET
-        updated_at = $[updated_at],
         tag_id = $[tag_id],
         content_url = $[content_url],
         title = $[title],
@@ -39,7 +37,7 @@ PostService.update = (id, tag_id, content_url, title, summary, caption) => {
         id = $[id]
     `;
 
-    return db.none(sql, { id, updated_at, tag_id, content_url, title, summary, caption });
+    return db.none(sql, { id, tag_id, content_url, title, summary, caption });
 };
 
 PostService.delete = (id) => {
