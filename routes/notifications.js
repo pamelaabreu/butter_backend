@@ -2,7 +2,7 @@ const express = require('express');
 const notificationRouter = express.Router();
 const NotificationService = require('../services/notifications');
 
-// GET - READ ALL LIKES 
+// GET - READ ALL NOTIFICATIONS 
 notificationRouter.get('/:id/readAllNotifications', (req, res, next) => {
     const { id } = req.params;
 

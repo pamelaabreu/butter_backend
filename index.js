@@ -9,6 +9,7 @@ const followRouter = require('./routes/follows');
 const likeRouter = require('./routes/likes');
 const commentRouter = require('./routes/comments');
 const notificationRouter = require('./routes/notifications');
+const tagRouter = require('./routes/tags');
 
 // MIDDLEWARE NEEDED
 // parse application/x-www-form-urlencoded
@@ -23,6 +24,7 @@ app.use('/follow', followRouter);
 app.use('/like', likeRouter);
 app.use('/comment', commentRouter);
 app.use('/notification', notificationRouter);
+app.use('/tag', tagRouter);
 
 app.use((err, req, res, next) => {
     res.status(400).json({error: err.toString()});
