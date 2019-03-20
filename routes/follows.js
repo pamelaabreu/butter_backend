@@ -10,7 +10,7 @@ followRouter.post('/', (req, res, next) => {
     const following_id = parseInt(user_following_id);
     
     FollowService.create(follower_id, following_id)
-      .then(data =>  NotificationService.create(follower_id, following_id, 'followed', data.id, null, null))
+      .then(data =>  NotificationService.create(follower_id, following_id, 'followed', data.id, null, null, null))
       .then(() => FollowService.updateUsersFollowers(following_id))
       .then(() =>  FollowService.updateUsersFollowings(follower_id))
       .then(() => res.json({success: `Created Follower id ${follower_id} and Following id ${following_id}.`}))

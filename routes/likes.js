@@ -14,7 +14,7 @@ likeRouter.post('/', (req, res, next) => {
     PostService.read(postLike_id)
     .then(data => userPosted_id = data.user_posted_id)
     .then(() => LikeService.create(userLike_id, postLike_id))
-    .then(data => NotificationService.create(userLike_id, userPosted_id, 'liked', null, data.id, null))
+    .then(data => NotificationService.create(userLike_id, userPosted_id, 'liked', null, data.id, null, postLike_id))
     .then(() => LikeService.updateLikes(postLike_id))
     .then(() => res.json({success: `User ID ${userLike_id} created liked on Post ID ${postLike_id}.`}))
     .catch(err => next(err))

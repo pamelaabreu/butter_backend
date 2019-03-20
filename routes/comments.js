@@ -14,7 +14,7 @@ commentRouter.post('/', (req, res, next) => {
     PostService.read(postCommented_id)
     .then(data => userPosted_id = data.user_posted_id)
     .then(() => CommentService.create(userCommented_id, postCommented_id, comment))
-    .then(data => NotificationService.create(userCommented_id, userPosted_id, 'commented', null, null, data.id))
+    .then(data => NotificationService.create(userCommented_id, userPosted_id, 'commented', null, null, data.id, postCommented_id))
     .then(() => CommentService.updatePostsComments(postCommented_id))
     .then(() => res.json({success: `User ID ${userCommented_id} created a comment on Post ID ${postCommented_id}.`}))
     .catch(err => next(err))

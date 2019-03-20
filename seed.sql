@@ -80,7 +80,8 @@ CREATE TABLE notifications (
   follower_action_id INT REFERENCES follows(id) NULL,
   like_action_id INT REFERENCES likes(id) NULL,
   comment_action_id INT REFERENCES comments(id) NULL,
-  user_received_action_id INT REFERENCES users(id) NOT NULL
+  user_received_action_id INT REFERENCES users(id) NOT NULL,
+  post_action_id INT REFERENCES posts(id) NULL
 );
 
 INSERT INTO tags (topic_name, image_url) VALUES
@@ -144,16 +145,16 @@ INSERT INTO saved_posts (user_saved_id, post_saved_id) VALUES
 (1, 3),
 (3, 3);
 
-INSERT INTO notifications (user_action_id, user_received_action_id, notification_type, follower_action_id, like_action_id, comment_action_id) VALUES
-(1, 2, 'commented', NULL, NULL, 1),
-(3, 2, 'commented', NULL, NULL, 2),
-(2, 1, 'commented', NULL, NULL, 3),
-(3, 1, 'commented', NULL, NULL, 4),
-(1, 3, 'followed', 1, NULL, NULL),
-(1, 2, 'followed', 2, NULL, NULL),
-(2, 1, 'followed', 3, NULL, NULL),
-(3, 1, 'followed', 4, NULL, NULL),
-(1, 2, 'liked', NULL, 1, NULL),
-(3, 2, 'liked', NULL, 2, NULL),
-(4, 2, 'liked', NULL, 3, NULL);
+INSERT INTO notifications (user_action_id, user_received_action_id, notification_type, follower_action_id, like_action_id, comment_action_id, post_action_id) VALUES
+(1, 2, 'commented', NULL, NULL, 1, 3),
+(3, 2, 'commented', NULL, NULL, 2, 3),
+(2, 1, 'commented', NULL, NULL, 3, 2),
+(3, 1, 'commented', NULL, NULL, 4, 2),
+(1, 3, 'followed', 1, NULL, NULL, NULL),
+(1, 2, 'followed', 2, NULL, NULL, NULL),
+(2, 1, 'followed', 3, NULL, NULL, NULL),
+(3, 1, 'followed', 4, NULL, NULL, NULL),
+(1, 2, 'liked', NULL, 1, NULL, 3),
+(3, 2, 'liked', NULL, 2, NULL, 3),
+(4, 2, 'liked', NULL, 3, NULL, 3);
 
