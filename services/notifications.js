@@ -6,7 +6,7 @@ NotificationService.create = (user_action_id, user_received_action_id, notificat
     INSERT INTO notifications (user_action_id, user_received_action_id, notification_type, follower_action_id, like_action_id, comment_action_id) VALUES
     ($[user_action_id], $[user_received_action_id], $[notification_type], $[follower_action_id], $[like_action_id], $[comment_action_id]);`;
 
-    return db.one(sql, { user_action_id, user_received_action_id, notification_type, follower_action_id, like_action_id, comment_action_id });
+    return db.none(sql, { user_action_id, user_received_action_id, notification_type, follower_action_id, like_action_id, comment_action_id });
 };
 
 NotificationService.read = (id) => {

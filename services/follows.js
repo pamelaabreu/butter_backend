@@ -1,10 +1,10 @@
-const {db} = './dbConnect';
+const {db} = require('./dbConnect');
 const FollowService = {};
 
 FollowService.create = (user_follower_id, user_following_id) => {
     const sql = `
     INSERT INTO follows (user_follower_id, user_following_id) VALUES
-    ($[user_follower_id], $[user_following_id]);`;
+    ($[user_follower_id], $[user_following_id]) RETURNING id;`;
 
     return db.one(sql, { user_follower_id, user_following_id });
 };
@@ -36,10 +36,11 @@ FollowService.update = (id, user_follower_id, user_following_id) => {
 
 FollowService.delete = (id) => {
     const sql = `
-    DELETE FROM follows WHERE id=$[id]
+    DELETE FROM notifications WHERE follower_action_id=$[id];
+    DELETE FROM follows WHERE id=$[id] RETURNING user_follower_id, user_following_id;
     `;
 
-    return db.none(sql, { id });
+    return db.one(sql, { id });
 };
 
 FollowService.readAllFollowers = (id) => {
@@ -65,6 +66,23 @@ FollowService.readAllFollowers = (id) => {
     return db.any(sql, { id });
 }
 
+FollowService.updateUsersFollowers = (id) => {
+    const sql = `
+    UPDATE users
+    SET
+        followers_number = $[followers_number]
+    WHERE
+        id = $[id]
+    `;
+
+    return FollowService.readAllFollowers(id)
+    .then(data => {
+        const followers_number = data.length;
+        return db.none(sql, { id, followers_number });
+    })
+    .catch(err => console.log(err))
+};
+
 FollowService.readAllFollowings = (id) => {
     const sql = `
     SELECT 
@@ -86,23 +104,6 @@ FollowService.readAllFollowings = (id) => {
         follows.user_follower_id = $[id]
     `;
     return db.any(sql, { id });
-};
-
-FollowService.updateUsersFollowers = (id) => {
-    const sql = `
-    UPDATE users
-    SET
-        followers_number = $[followers_number]
-    WHERE
-        id = $[id]
-    `;
-
-    return FollowService.readAllFollowers(id)
-    .then(data => {
-        const followers_number = data.length;
-        return db.none(sql, { id, followers_number });
-    })
-    .catch(err => console.log(err))
 };
 
 FollowService.updateUsersFollowings = (id) => {
