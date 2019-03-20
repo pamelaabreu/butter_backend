@@ -7,7 +7,6 @@ const PostService = require('../services/posts');
 // POST - CREATE 
 likeRouter.post('/', (req, res, next) => {
     const { user_like_id, post_like_id } = req.body;
-
     const userLike_id = parseInt(user_like_id);
     const postLike_id = parseInt(post_like_id);
     let userPosted_id = null;

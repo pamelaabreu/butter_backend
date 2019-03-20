@@ -62,6 +62,6 @@ PostService.readAllPosts = (id) => {
     `;
 
     return db.any(sql, { id });
-}
+};
 
 module.exports = PostService;

@@ -7,6 +7,7 @@ const postRouter = require('./routes/posts');
 const userRouter = require('./routes/users');
 const followRouter = require('./routes/follows');
 const likeRouter = require('./routes/likes');
+const commentRouter = require('./routes/comments');
 
 // MIDDLEWARE NEEDED
 // parse application/x-www-form-urlencoded
@@ -19,6 +20,7 @@ app.use('/post', postRouter);
 app.use('/user', userRouter);
 app.use('/follow', followRouter);
 app.use('/like', likeRouter);
+app.use('/comment', commentRouter);
 
 app.use((err, req, res, next) => {
     res.status(400).json({error: err.toString()});
