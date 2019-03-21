@@ -28,60 +28,105 @@ CREATE TABLE posts (
   id SERIAL PRIMARY KEY,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  user_posted_id INT REFERENCES users(id) NOT NULL,
+  user_posted_id INT NOT NULL,
   tag_id INT REFERENCES tags(id) NULL,
   content_url VARCHAR NOT NULL,
   title VARCHAR NULL,
   summary VARCHAR NULL,
   caption VARCHAR NULL,
   likes INT NULL,
-  comments INT NULL
+  comments INT NULL,
+    FOREIGN KEY (user_posted_id) 
+    REFERENCES users(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE comments (
   id SERIAL PRIMARY KEY,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  user_commented_id INT REFERENCES users(id) NOT NULL,
-  post_commented_id INT REFERENCES posts(id) NOT NULL,
-  comment VARCHAR NOT NULL
+  user_commented_id INT NOT NULL,
+  post_commented_id INT NOT NULL,
+  comment VARCHAR NOT NULL,
+    FOREIGN KEY (user_commented_id) 
+    REFERENCES users(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (post_commented_id) 
+    REFERENCES posts(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE follows (
   id SERIAL PRIMARY KEY,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  user_follower_id INT REFERENCES users(id) NOT NULL,
-  user_following_id INT REFERENCES users(id) NOT NULL
+  user_follower_id INT NOT NULL,
+  user_following_id INT NOT NULL,
+    FOREIGN KEY (user_follower_id)
+    REFERENCES users(id)
+    ON DELETE CASCADE,  
+    FOREIGN KEY (user_following_id) 
+    REFERENCES users(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE likes (
   id SERIAL PRIMARY KEY,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  user_like_id INT REFERENCES users(id) NOT NULL,
-  post_like_id INT REFERENCES posts(id) NOT NULL
+  user_like_id INT NOT NULL,
+  post_like_id INT NOT NULL,
+    FOREIGN KEY (user_like_id) 
+    REFERENCES users(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (post_like_id) 
+    REFERENCES posts(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE saved_posts (
   id SERIAL PRIMARY KEY,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  user_saved_id INT REFERENCES users(id) NOT NULL,
-  post_saved_id INT REFERENCES posts(id) NOT NULL
+  user_saved_id INT NOT NULL,
+  post_saved_id INT NOT NULL,
+    FOREIGN KEY (user_saved_id) 
+    REFERENCES users(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (post_saved_id) 
+    REFERENCES posts(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE notifications (
   id SERIAL PRIMARY KEY,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  user_action_id INT REFERENCES users(id) NOT NULL,
+  user_action_id INT NOT NULL,
   notification_type VARCHAR NOT NULL,
-  follower_action_id INT REFERENCES follows(id) NULL,
-  like_action_id INT REFERENCES likes(id) NULL,
-  comment_action_id INT REFERENCES comments(id) NULL,
-  user_received_action_id INT REFERENCES users(id) NOT NULL,
-  post_action_id INT REFERENCES posts(id) NULL
+  follower_action_id INT NULL,
+  like_action_id INT NULL,
+  comment_action_id INT NULL,
+  user_received_action_id INT NOT NULL,
+  post_action_id INT NULL,
+    FOREIGN KEY (user_action_id) 
+    REFERENCES users(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (follower_action_id) 
+    REFERENCES follows(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (like_action_id) 
+    REFERENCES likes(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (comment_action_id) 
+    REFERENCES comments(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (user_received_action_id) 
+    REFERENCES users(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (post_action_id) 
+    REFERENCES posts(id)
+    ON DELETE CASCADE
 );
 
 INSERT INTO tags (topic_name, image_url) VALUES
