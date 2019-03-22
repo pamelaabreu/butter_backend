@@ -5,6 +5,13 @@ install:
   - npm install
 before_script:
   - export CODE_COVERAGE_TOKEN=$CODE_COVERAGE_TOKEN
+  - export HEROKU_KEY=$HEROKU_KEY
 script:
   - npm run write-coveralls
   - npm test
+deploy:
+  provider: heroku
+  api_key: $HEROKU_KEY
+  app: butter-backend 
+  on: master 
+  strategy: git
