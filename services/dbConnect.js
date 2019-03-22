@@ -3,7 +3,7 @@ let db = null;
 
 if (!pgp) {
     pgp = require('pg-promise')({});  
-    db = pgp('postgres://localhost/butter'); 
+    db = pgp(process.env.DATABASE_URL || 'postgres://localhost/butter'); 
 }
 
 module.exports = {db}
