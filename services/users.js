@@ -40,7 +40,7 @@ UserService.update = (id, birthname, username, email, firebase_uid, profile_img,
 
 UserService.delete = (id) => {
     const sql = `
-    DELETE FROM users WHERE id=$[id]
+    DELETE FROM users WHERE id=$[id];
     `;
 
     return db.none(sql, { id });
