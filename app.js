@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const express = require('express');
 const app = express();
 
@@ -9,8 +10,10 @@ const likeRouter = require('./routes/likes');
 const commentRouter = require('./routes/comments');
 const notificationRouter = require('./routes/notifications');
 const tagRouter = require('./routes/tags');
+const loginRouter = require('./routes/login');
 
 // MIDDLEWARE NEEDED
+app.use(cors());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
@@ -28,6 +31,7 @@ app.use('/like', likeRouter);
 app.use('/comment', commentRouter);
 app.use('/notification', notificationRouter);
 app.use('/tag', tagRouter);
+app.use('/login', loginRouter);
 
 app.use((err, req, res, next) => {
   console.log('HERE')

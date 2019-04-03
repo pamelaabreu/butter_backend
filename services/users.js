@@ -4,9 +4,9 @@ const UserService = {};
 UserService.create = (birthname, username, email, firebase_uid, profile_img, birthday, joining_reason) => {
     const sql = `
     INSERT INTO users (birthname, username, email, firebase_uid, profile_img, birthday, joining_reason) VALUES
-    ($[birthname], $[username], $[email], $[firebase_uid], $[profile_img], $[birthday], $[joining_reason]);`;
+    ($[birthname], $[username], $[email], $[firebase_uid], $[profile_img], $[birthday], $[joining_reason]) RETURNING id;`;
 
-    return db.none(sql, { birthname, username, email, firebase_uid, profile_img, birthday, joining_reason });
+    return db.one(sql, { birthname, username, email, firebase_uid, profile_img, birthday, joining_reason });
 };
 
 UserService.read = (id) => {

@@ -8,7 +8,7 @@ userRouter.post('/', (req, res, next) => {
 
     UserService.create(birthname, username, email, firebase_uid, profile_img, birthday, joining_reason)
       .then(data => {
-        res.json({success: `Created User with username ${username}.`});
+        res.json({data: data.id});
       })
       .catch(err => {
         next(err);
