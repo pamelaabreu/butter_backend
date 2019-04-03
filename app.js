@@ -30,7 +30,13 @@ app.use('/notification', notificationRouter);
 app.use('/tag', tagRouter);
 
 app.use((err, req, res, next) => {
-    res.status(400).json({error: err.toString()});
-  });
+  console.log('HERE')
+  res.status(400).json({error: err.toString()});
+});
+
+// if NO route found...
+app.use(function(req, res, next) {
+  res.status(400).send({error: err.toString()});
+});
 
 module.exports = { app }

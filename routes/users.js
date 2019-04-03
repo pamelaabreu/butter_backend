@@ -19,9 +19,11 @@ userRouter.post('/', (req, res, next) => {
 userRouter.get('/all', (req, res, next) => {
     UserService.readAllUsers()
       .then(data => {
+        res.status(200);
         res.json(data);
       })
       .catch(err => {
+        res.status(400);
         next(err);
       })
   });

@@ -1,23 +1,18 @@
 const express = require('express');
 const commentRouter = express.Router();
 const CommentService = require('../services/comments');
-const NotificationService = require('../services/notifications');
-const PostService = require('../services/posts');
+const {createCommentAndNotify,} = require('../utils/comments');
+
 
 // POST - CREATE 
 commentRouter.post('/', (req, res, next) => {
     const { user_commented_id, post_commented_id, comment } = req.body;
     const userCommented_id = parseInt(user_commented_id);
     const postCommented_id = parseInt(post_commented_id);
-    let userPosted_id = null;
     
-    PostService.read(postCommented_id)
-    .then(data => userPosted_id = data.user_posted_id)
-    .then(() => CommentService.create(userCommented_id, postCommented_id, comment))
-    .then(data => NotificationService.create(userCommented_id, userPosted_id, 'commented', null, null, data.id, postCommented_id))
-    .then(() => CommentService.updatePostsComments(postCommented_id))
+    createCommentAndNotify(userCommented_id, postCommented_id, comment)
     .then(() => res.json({success: `User ID ${userCommented_id} created a comment on Post ID ${postCommented_id}.`}))
-    .catch(err => next(err))
+    .catch(next);
   });
 
 // GET - READ ALL COMMENTS 
