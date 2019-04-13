@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/pamelaabreu/butter_backend.svg?branch=master)](https://travis-ci.org/pamelaabreu/butter_backend) [![Coverage Status](https://coveralls.io/repos/github/pamelaabreu/butter_backend/badge.svg?branch=master)](https://coveralls.io/github/pamelaabreu/butter_backend?branch=master) [![Heroku](http://heroku-badge.herokuapp.com/?app=butterbackenda&style=flat)](https://butter-backend.herokuapp.com/)
+[![Build Status](https://travis-ci.org/pamelaabreu/butter_backend.svg?branch=master)](https://travis-ci.org/pamelaabreu/butter_backend) [![Coverage Status](https://coveralls.io/repos/github/pamelaabreu/butter_backend/badge.svg?branch=master)](https://coveralls.io/github/pamelaabreu/butter_backend?branch=master)
 
 # Butter Backend Deployment App
 
