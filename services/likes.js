@@ -84,4 +84,16 @@ LikeService.countLikes = (id) => {
     db.any(sql, { id })
 };
 
+LikeService.checkLike = (userLikeId, postLikeId) => {
+    const sql = `
+    SELECT
+        likes.*
+    FROM likes
+    WHERE
+        likes.user_like_id = $[userLikeId] AND likes.post_like_id = $[postLikeId]
+    `;
+
+    return db.one(sql, { userLikeId, postLikeId })
+}
+
 module.exports = LikeService;

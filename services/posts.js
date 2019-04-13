@@ -4,20 +4,16 @@ const PostService = {};
 PostService.create = (user_posted_id, tag_id, content_url, title, summary, caption) => {
     const sql = `
     INSERT INTO posts (user_posted_id, tag_id, content_url, title, summary, caption) VALUES
-    ($[user_posted_id], $[tag_id], $[content_url], $[title], $[summary], $[caption]);`;
+    ($[user_posted_id], $[tag_id], $[content_url], $[title], $[summary], $[caption]) RETURNING id;`;
 
-    return db.none(sql, { user_posted_id, tag_id, content_url, title, summary, caption })
+    return db.one(sql, { user_posted_id, tag_id, content_url, title, summary, caption })
 };
 
 PostService.read = (id) => {
     const sql = `
         SELECT
-            posts.*,
-            tags.topic_name,
-            tags.image_url AS tag_image
+            posts.*
         FROM posts
-        INNER JOIN tags
-        ON posts.tag_id = tags.id
         WHERE posts.id = $[id]
     `;
 
@@ -48,20 +44,27 @@ PostService.delete = (id) => {
     return db.none(sql, { id });
 };
 
-PostService.readAllPosts = (id) => {
+PostService.readAllUsersPosts = (id) => {
     const sql = `
     SELECT 
-        posts.*,
-        tags.topic_name,
-        tags.image_url AS tag_image
+        posts.*
     FROM posts
-    INNER JOIN tags
-    ON posts.tag_id = tags.id
     WHERE
         posts.user_posted_id = $[id]
     `;
 
     return db.any(sql, { id });
 };
+
+PostService.readAllPosts = () => {
+    const sql = `
+    SELECT 
+        posts.*
+    FROM posts
+    `;
+
+    return db.any(sql);
+};
+
 
 module.exports = PostService;

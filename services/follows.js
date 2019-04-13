@@ -143,4 +143,16 @@ FollowService.countFollowings = (id) => {
     return db.any(sql, { id });
 };
 
+FollowService.checkFollow = (userFollowerId, userFollowingId) => {
+    const sql = `
+    SELECT
+        follows.*
+    FROM follows
+    WHERE
+        follows.user_follower_id = $[userFollowerId] AND follows.user_following_id = $[userFollowingId]
+    `;
+
+    return db.one(sql, { userFollowerId, userFollowingId })
+}
+
 module.exports = FollowService;

@@ -9,11 +9,15 @@ followRouter.post('/', (req, res, next) => {
     const follower_id = parseInt(user_follower_id);
     const following_id = parseInt(user_following_id);
     
+    let followId = null;
     FollowService.create(follower_id, following_id)
-      .then(data =>  NotificationService.create(follower_id, following_id, 'followed', data.id, null, null, null))
+      .then(data => {
+        followId = data.id;
+        return NotificationService.create(follower_id, following_id, 'followed', data.id, null, null, null)
+      })
       .then(() => FollowService.updateUsersFollowers(following_id))
       .then(() =>  FollowService.updateUsersFollowings(follower_id))
-      .then(() => res.json({success: `Created Follower id ${follower_id} and Following id ${following_id}.`}))
+      .then(() => res.json({followId}))
       .catch(err => next(err))
   });
 
@@ -55,6 +59,22 @@ followRouter.get('/:id/', (req, res, next) => {
         next(err);
       })
   });
+
+// GET - CHECK FOLLOWING 
+followRouter.get('/checkFollowing/:userFollowerId/:userFollowingId', (req, res, next) => {
+  const { userFollowerId, userFollowingId } = req.params;
+
+  FollowService.checkFollow(userFollowerId, userFollowingId)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      const sqlError = "No data returned from the query."
+      if(err.message.toLowerCase() === sqlError.toLowerCase()){
+        res.json(null)
+      } else next(err);
+    })
+});
 
 // PUT - UPDATE
 followRouter.put('/:id', (req, res, next) => {

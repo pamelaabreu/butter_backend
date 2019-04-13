@@ -13,4 +13,18 @@ tagRouter.get('/all', (req, res, next) => {
       })
   });
 
+// GET - READ TAG 
+tagRouter.get('/:id', (req, res, next) => {
+  const { id } = req.params;
+  console.log(id)
+
+  TagService.readTag(id)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      next(err);
+    })
+});
+
 module.exports = tagRouter;

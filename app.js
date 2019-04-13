@@ -34,7 +34,6 @@ app.use('/tag', tagRouter);
 app.use('/login', loginRouter);
 
 app.use((err, req, res, next) => {
-  console.log('HERE')
   res.status(400).json({error: err.toString()});
 });
 

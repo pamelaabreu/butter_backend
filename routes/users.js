@@ -28,7 +28,7 @@ userRouter.get('/all', (req, res, next) => {
       })
   });
 
-// GET - READ 
+// GET - READ ID
 userRouter.get('/:id/', (req, res, next) => {
     const {id} = req.params;
   
@@ -40,6 +40,19 @@ userRouter.get('/:id/', (req, res, next) => {
         next(err);
       })
   });
+
+// GET - READ USERNAME
+userRouter.get('/username/:username/', (req, res, next) => {
+  const {username} = req.params;
+
+  UserService.readUsername(username)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      next(err);
+    })
+});
 
 // PUT - UPDATE
 userRouter.put('/:id', (req, res, next) => {

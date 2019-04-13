@@ -21,6 +21,18 @@ UserService.read = (id) => {
     return db.one(sql, { id });
 };
 
+UserService.readUsername = (username) => {
+    const sql = `
+    SELECT
+        users.*
+    FROM users
+    WHERE
+        users.username = $[username]
+    `;
+
+    return db.one(sql, { username });
+};
+
 UserService.update = (id, birthname, username, email, firebase_uid, profile_img, birthday) => {
     const sql = `
     UPDATE users

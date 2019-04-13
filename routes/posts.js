@@ -8,15 +8,28 @@ postRouter.post('/', (req, res, next) => {
   
     PostService.create(user_posted_id, tag_id, content_url, title, summary, caption)
       .then(data => {
-        res.json({success: `Created Post with title ${title}.`});
+        res.status(200);
+        res.json({data: data.id});
       })
       .catch(err => {
         next(err);
       })
   });
 
+// GET - READ ALL POSTS 
+postRouter.get('/allPosts/all', (req, res, next) => {
+
+  PostService.readAllPosts()
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      next(err);
+    })
+});
+
 // GET - READ 
-postRouter.get('/:id/', (req, res, next) => {
+postRouter.get('/:id', (req, res, next) => {
     const { id } = req.params;
   
     PostService.read(id)
@@ -55,11 +68,11 @@ postRouter.delete('/:id', (req, res, next) => {
       })
   });
 
-// GET - READ ALL POSTS 
-postRouter.get('/:id/all', (req, res, next) => {
+// GET - READ ALL USER POSTS 
+postRouter.get('/all/:id', (req, res, next) => {
     const { id } = req.params;
   
-    PostService.readAllPosts(id)
+    PostService.readAllUsersPosts(id)
       .then(data => {
         res.json(data);
       })
@@ -67,5 +80,6 @@ postRouter.get('/:id/all', (req, res, next) => {
         next(err);
       })
   });
+
 
 module.exports = postRouter;
